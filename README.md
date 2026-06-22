@@ -1,5 +1,5 @@
-# DOVA - Device Owned Voice Agent
-DOVA is a local first agentic voice agent designed to co-exist with your system.
+# DOVA - Device Owned Voice Assistant
+DOVA is a local first agentic voice assistant designed to co-exist with your system.
 
 > [!CAUTION]
 > **Use at your own risk, LLMs can be unpredictable.** We do not take responsability for any harm caused.
