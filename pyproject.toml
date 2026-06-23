@@ -1,10 +1,13 @@
 [project]
 name = "dova"
 version = "0.1.0"
-description = "Add your description here"
+description = "DOVA is a local first agentic voice assistant designed to co-exist with your system."
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "deepagents>=0.6.11",
+    "langchain-ollama>=1.1.0",
+]
 
 [dependency-groups]
 dev = [
