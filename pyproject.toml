@@ -6,14 +6,12 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "deepagents>=0.6.11",
+    "fastapi[standard]>=0.138.2",
     "langchain-ollama>=1.1.0",
     "langsmith[sandbox]>=0.9.1",
-    "pyautogui>=0.9.54",
-    "pyperclip>=1.11.0",
     "pyttsx3>=2.99",
     "rich>=15.0.0",
-    "sounddevice>=0.5.5",
-    "speechrecognition[audio,vosk]>=3.17.0",
+    "websockets>=15.0.1",
 ]
 
 [dependency-groups]
