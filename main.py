@@ -44,22 +44,23 @@ answer_data = None
 async def websocket_heartbeat(websocket: WebSocket):
     while True:
         await asyncio.sleep(5)
-        await manager.send_update({"type": "heartbeat"}, websocket)
+        await manager.send_update("heartbeat", "", websocket)
 
 @agent.on("stream")
 async def onstream(content: str):
-    await manager.send_update({"type": "stream", "content": content}, agent.websocket)
+    await manager.send_update("stream", content, agent.websocket)
 
 @agent.on("stream_end")
 async def onend():
-    await manager.send_update({"type": "stream_end", "content": ""}, agent.websocket)
+    await manager.send_update("stream_end", "", agent.websocket)
 
 @agent.on("interrupt")
 async def oninterrupt(interrupt):
+    global answer_data
     answer_event.clear()
     answer_data = None
     value = None
-    await manager.send_update({"type": "interrupt", "content": interrupt}, agent.websocket)
+    await manager.send_update("interrupt", interrupt, agent.websocket)
     try:
         await asyncio.wait_for(answer_event.wait(), timeout=10.0)
         value = answer_data
@@ -81,9 +82,9 @@ async def websocket_endpoint(websocket: WebSocket):
         agent.websocket = websocket
         agent.loop = asyncio.get_running_loop()
         heartbeat_task = asyncio.create_task(websocket_heartbeat(websocket))
-        await manager.send_update({"type": "connected", "content": "Hello World!"}, websocket)
+        await manager.send_update("connected", "", websocket)
 
-        await manager.send_update({"type": "available"}, websocket)
+        await manager.send_update("available", "", websocket)
 
         while True:
             data = await websocket.receive_text()
@@ -98,13 +99,14 @@ async def websocket_endpoint(websocket: WebSocket):
             if datatype == "interrupt":
                 global answer_data
                 answer_data = content
+                answer_event.set()
                 continue
 
             if datatype == "message":
                 agent.AddMessage(HumanMessage(content))
                 async def run_query():
                     await agent.query()
-                    await manager.send_update({"type": "available"}, websocket)
+                    await manager.send_update("available", "", websocket)
 
                 asyncio.create_task(run_query())
                 continue
@@ -116,7 +118,7 @@ async def websocket_endpoint(websocket: WebSocket):
 
             if datatype == "test":
                 print("content test:", content)
-                await manager.send_update({"type": "test", "content": content}, websocket)
+                await manager.send_update("test", content, websocket)
                 continue
 
             printing.error(f"Invalid datatype: {datatype}")
@@ -127,5 +129,3 @@ async def websocket_endpoint(websocket: WebSocket):
             heartbeat_task.cancel()
         if connected:
             manager.disconnect(websocket)
-            if agent.websocket == websocket:
-                agent.websocket = None

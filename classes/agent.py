@@ -99,7 +99,7 @@ class Agent:
             self.loop,
         )
         return future.result()
-    
+
     async def _trigger(self, event_name, *args, **kwargs):
         if event_name in self.connections:
             for listener in self.connections[event_name]:
@@ -165,7 +165,7 @@ class Agent:
             for interrupt in interrupts:
                 result = self._trigger_sync("interrupt", interrupt)
                 if result == False:
-                    result = {"type": "reject", "message": "Action has timed-out."}
+                    result = [{"type": "reject", "message": "Action has timed-out."}]
                 decisions[interrupt.id] = {
                     "decisions": result
                 }
