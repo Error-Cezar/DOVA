@@ -17,4 +17,9 @@ def get_system_type() -> str:
     """Get the current operating system."""
     return agent.await_tool("get_system_type")
 
-tools = [execute, get_system_type]
+@tool()
+def get_user() -> str:
+    """Get the user currently logged into the system."""
+    return agent.await_tool("get_user")
+
+tools = [execute, get_system_type, get_user]
