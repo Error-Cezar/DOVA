@@ -13,7 +13,9 @@ class Tools:
         This function should be called after all modules are imported.
         Uses qualified names to avoid shadowing built-in modules.
         """
-        tools_dir = Path("agent/tools")
+
+        BASE_DIR = Path(__file__).resolve().parent
+        tools_dir = (BASE_DIR / "tools").resolve()
 
         if not tools_dir.exists():
             print(f"Tools directory not found: {tools_dir}")
