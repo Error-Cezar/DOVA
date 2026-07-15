@@ -1,6 +1,5 @@
 from argparse import ArgumentParser
 
-
 def parse(parser: ArgumentParser):
     parser.add_argument("--dev", help="Run in development mode", action="store_true")
     parser.add_argument("--model", help="Model to use", default="gemma4:e4b")

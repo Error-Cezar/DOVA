@@ -1,26 +1,29 @@
 from concurrent.futures import TimeoutError as FutureTimeoutError
 
-from fastapi import WebSocket
-from langchain.tools import tool
-from langchain.agents import create_agent
-from typing import Any
-import sys, asyncio, json
-from langgraph.types import Command
-from langchain_core.runnables import RunnableConfig
-from langchain.messages import AnyMessage, AIMessageChunk, AIMessage
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain.agents.middleware import HumanInTheLoopMiddleware, InterruptOnConfig
-from deepagents.backends.local_shell import LocalShellBackend
-from langgraph.checkpoint.memory import MemorySaver
-from langchain_core.utils.uuid import uuid7
+from dova.modules import renderer
+
+from dova.agent import tooling
+from dova.agent import prompt
 
 import threading
 import time
+import sys, asyncio, json
 
-import modules.renderer as renderer
+from typing import Any
+from fastapi import WebSocket
 
-import agent.tooling as tooling
-import agent.prompt as prompt
+from langchain.tools import tool
+from langchain.agents import create_agent
+from langchain_core.runnables import RunnableConfig
+
+from langchain.messages import AnyMessage, AIMessageChunk, AIMessage
+from langchain_core.language_models.chat_models import BaseChatModel
+
+from langchain.agents.middleware import HumanInTheLoopMiddleware, InterruptOnConfig
+from langgraph.checkpoint.memory import MemorySaver
+
+from langchain_core.utils.uuid import uuid7
+from langgraph.types import Command
 
 def_prompt = prompt.prompt
 
