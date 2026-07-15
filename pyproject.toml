@@ -3,6 +3,9 @@ dev = [
     "commitizen>=4.16.4",
 ]
 
+[project.optional-dependencies]
+build = ["uv ~= 0.7.12"]
+
 [project]
 name = "dova"
 version = "0.1.0"
@@ -23,6 +26,14 @@ dova = "dova.main:main"
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
+
+[tool.semantic_release]
+build_command = """
+    python -m pip install -e '.[build]'
+    uv lock --upgrade-package "$PACKAGE_NAME"
+    git add uv.lock
+    uv build
+"""
 
 [tool.setuptools.packages.find]
 where = ["src"]
