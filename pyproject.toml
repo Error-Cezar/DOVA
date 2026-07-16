@@ -8,7 +8,7 @@ build = ["uv ~= 0.7.12"]
 
 [project]
 name = "dova"
-version = "0.1.0"
+version = "0.0.0"
 description = "DOVA is a local first agentic voice assistant designed to co-exist with your system."
 readme = "README.md"
 requires-python = ">=3.11"
